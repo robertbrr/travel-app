@@ -1,0 +1,7 @@
+/* Main page background image */
+.main-page
+    {
+    background-image: url("../images/welcome_image.jpg") ;
+    height: 120vh;
+    background-size: cover;
+    }

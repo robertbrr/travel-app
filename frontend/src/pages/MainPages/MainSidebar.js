@@ -1,6 +1,9 @@
+/* Components */
 import { NavLink } from 'react-router-dom'
-import '../../navbar.css'
+
+/* Styles */
 import companyLogo from '../../images/globert_logo.png'
+import '../../styles/navbar.css'
 
 const MainSidebar = () => {
     return (

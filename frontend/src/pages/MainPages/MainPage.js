@@ -1,5 +1,9 @@
-import "../../background.css"
+/* Components */
 import MainSidebar from "./MainSidebar";
+
+/* Styles */
+import "../../styles/background.css"
+
 function MainPage()
     {
     return(
