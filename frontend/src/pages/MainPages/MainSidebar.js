@@ -24,7 +24,7 @@ const MainSidebar = () => {
                         <li>
                             <div className = "nav-select-container">
                                 <button className = "nav-select">Destinations</button>
-                                <div className = "nav-options">
+                                <div className = "nav-select-options">
                                     <a href = "/destinations" style = { { fontSize: "15px" } }>Destinations</a>
                                     <a href = "/offers" style = { { fontSize: "15px"} }>Offers</a>
                                 </div>
