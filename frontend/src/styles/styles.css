@@ -40,10 +40,10 @@ code
   {
   background-color: rgba(0, 0, 0, 0.55);
   width: 30%;
-  height: 40%;
+  height: 33%;
   position: absolute;
   border-radius: 2%;
-  top: 40%;
+  top: 42%;
   left: 50%;
   transform: translate(-50%, -50%);
   color:white;
@@ -53,4 +53,5 @@ code
   flex-direction: column;
   display: block;
   font-size: 20px;
+  text-align: center; /* Center text horizontally */
   }
