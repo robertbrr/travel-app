@@ -1,11 +1,21 @@
 /* Components */
-import { NavLink } from 'react-router-dom'
+import {NavLink, useNavigate} from 'react-router-dom'
 
 /* Styles */
 import companyLogo from '../../images/globert_logo.png'
 import '../../styles/navbar.css'
 
 const MainSidebar = () => {
+
+    const navigate = useNavigate()
+    const constantSelection = "Destinations"
+
+    const destinationsDropMenuHandler = ( event ) =>
+        {
+        console.log( event.target.value);
+        navigate( event.target.value );
+        }
+
     return (
         <nav className = "navbar">
             <div className = "container">
@@ -20,12 +30,16 @@ const MainSidebar = () => {
                             <NavLink to="/home">Home</NavLink>
                         </li>
                         <li>
-                            <NavLink to="/destinations">Destinations</NavLink>
+                            <div className="nav-select-container">
+                                <button className="nav-select">Destinations</button>
+                                <div className="nav-options">
+                                    <a href="/destinations" style={{fontSize: "15px"}} >Destinations</a>
+                                    <a href="/offers" style={{fontSize: "15px"}} >Offers</a>
+                                </div>
+                            </div>
                         </li>
                         <li>
-
-                            <input className= "nav-search" type="text" placeholder = "Search destinations.." ></input>
-
+                            <input className="nav-search" type="text" placeholder="Search destinations.."></input>
                         </li>
                         <li>
                             <NavLink to="/login">Log In</NavLink>

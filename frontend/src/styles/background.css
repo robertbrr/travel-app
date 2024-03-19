@@ -5,3 +5,11 @@
     height: 120vh;
     background-size: cover;
     }
+
+/* Destinations page background image */
+.destinations-page
+    {
+    background-image: url("../images/destinations_page.jpg") ;
+    height: 120vh;
+    background-size: cover;
+    }
