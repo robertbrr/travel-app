@@ -7,7 +7,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { dateFromDateTime } from "../../utilities/utilities";
+import { dateFromDateTime, getTomorrowDate } from "../../utilities/utilities";
 import dayjs from 'dayjs';
 
 /* Styles */
@@ -63,7 +63,7 @@ function DestinationsPage()
                     <LocalizationProvider dateAdapter = { AdapterDayjs } >
                         <DemoContainer components = { [ 'DatePicker' ] }>
                             <DatePicker
-                                defaultValue = { dayjs( dateFromDateTime( new Date() ) ) }
+                                defaultValue = { dayjs( dateFromDateTime( getTomorrowDate() ) ) }
                                 shouldDisableDate = { ( e ) => disableDatesBeforeFrom( e.$d ) }
                                 onChange = { ( e ) => setToHandler( e.$d ) }
                             />
