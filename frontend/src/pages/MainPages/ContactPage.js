@@ -9,7 +9,7 @@ function ContactPage()
     {
     /* JSX */
     return(
-        <div className = "destinations-page">
+        <div className = "contact-page">
             <MainSidebar></MainSidebar>
             <div className="contact-container">
                 <img src = { companyLogo } style={ { width: '100%', height: 'auto',  transform: "scale(0.5)" } } alt = 'Globert Logo'/>

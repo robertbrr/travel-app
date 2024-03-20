@@ -6,6 +6,7 @@ body
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow:auto;
   }
 
 code
@@ -13,12 +14,30 @@ code
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
   }
 
+/*--------------------------MainPage.js------------------------*/
 .main-app
   {
   background-color: aquamarine;
   width: max-content;
   height: 100%;
   }
+
+.intro-text
+  {
+  color:  #303121;
+  font-size: 30px;
+  font-weight: bold;
+  padding-left: 20px;
+  }
+
+.copyright
+  {
+  position: fixed;
+  bottom: 40px;
+  left: 20px;
+  transform: translate(0, 100%);
+  }
+
 
 /*----------------------DestinationsPage.js---------------------*/
 .dates-container
@@ -38,13 +57,6 @@ code
 .destinations-container-container-big
   {
   overflow: auto;
-  /*background-color: rgb(239, 239, 239);*/
-  }
-
-.destinations-container-container
-  {
-  /*background-color: rgba(255, 255, 255);*/
-  /*background-color: rgba(0, 0, 0, 0.55);*/
   }
 
 .destinations-container
@@ -52,12 +64,14 @@ code
   display: grid;
   grid-template-columns: repeat( 4, auto );
   padding: 0;
+  overflow: scroll;
+  max-height: 510px;
+  overflow-x: hidden;
   }
 
 .destination-item
   {
   background-color: rgba(0, 0, 0, 0.55);
-  /*padding: 2px;*/
   margin: 20px;
   text-align: center;
   border-radius: 6px;

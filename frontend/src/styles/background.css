@@ -1,7 +1,7 @@
 /* Main page background image */
 .main-page
     {
-    background-image: url("../images/welcome_image.jpg") ;
+    background-image: url("../images/main_page.jpg") ;
     height: 120vh;
     background-size: cover;
     }
@@ -10,8 +10,8 @@
 .destinations-page
     {
     background-image: url("../images/destinations_page.jpg") ;
-    background-size: cover; /* Cover the entire background */
     }
+
 
 /* Destinations page background image */
 .contact-page

@@ -69,43 +69,39 @@ function DestinationsPage()
     return(
         <div className = "destinations-page">
             <MainSidebar></MainSidebar>
-            <div className={"destinations-container-container-big"}>
-                <div className = "dates-container" >
-                    <div className = "date-container">
-                        <label>Start Date</label>
-                        <LocalizationProvider dateAdapter = { AdapterDayjs } >
-                            <DemoContainer components = { [ 'DatePicker' ] }>
-                                <DatePicker
-                                    defaultValue = { dayjs( dateFromDateTime( new Date() ) ) }
-                                    shouldDisableDate = { ( e ) => disableDatesBeforePresent( e.$d ) }
-                                    onChange = { ( e ) => setFromHandler( e.$d ) }
-                                />
-                            </DemoContainer>
-                        </LocalizationProvider>
-                    </div>
-                    <div className = "date-container" >
-                        <label>End Date</label>
-                        <LocalizationProvider dateAdapter = { AdapterDayjs } >
-                            <DemoContainer components = { [ 'DatePicker' ] }>
-                                <DatePicker
-                                    defaultValue = { dayjs( dateFromDateTime( getTomorrowDate() ) ) }
-                                    shouldDisableDate = { ( e ) => disableDatesBeforeFrom( e.$d ) }
-                                    onChange = { ( e ) => setToHandler( e.$d ) }
-                                />
-                            </DemoContainer>
-                        </LocalizationProvider>
-                    </div>
+            <div className = "dates-container" >
+                <div className = "date-container">
+                    <label>Start Date</label>
+                    <LocalizationProvider dateAdapter = { AdapterDayjs } >
+                        <DemoContainer components = { [ 'DatePicker' ] }>
+                            <DatePicker
+                                defaultValue = { dayjs( dateFromDateTime( new Date() ) ) }
+                                shouldDisableDate = { ( e ) => disableDatesBeforePresent( e.$d ) }
+                                onChange = { ( e ) => setFromHandler( e.$d ) }
+                            />
+                        </DemoContainer>
+                    </LocalizationProvider>
                 </div>
-                <div className = { "destinations-container-container" } >
-                    <div className = "destinations-container" >
-                        {
-                        mockDestinations.map( (dest) =>
-                            {
-                            return( buildDestinationDiv( dest ) )
-                            })
-                        }
-                    </div>
+                <div className = "date-container" >
+                    <label>End Date</label>
+                    <LocalizationProvider dateAdapter = { AdapterDayjs } >
+                        <DemoContainer components = { [ 'DatePicker' ] }>
+                            <DatePicker
+                                defaultValue = { dayjs( dateFromDateTime( getTomorrowDate() ) ) }
+                                shouldDisableDate = { ( e ) => disableDatesBeforeFrom( e.$d ) }
+                                onChange = { ( e ) => setToHandler( e.$d ) }
+                            />
+                        </DemoContainer>
+                    </LocalizationProvider>
                 </div>
+            </div>
+            <div className = "destinations-container" >
+                {
+                mockDestinations.map( (dest) =>
+                    {
+                    return( buildDestinationDiv( dest ) )
+                    })
+                }
             </div>
         </div>
     );
