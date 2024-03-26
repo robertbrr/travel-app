@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 
 import * as userStorage from "../../utilities/UserSession";
 import "../../styles/styles.css"
-import MainPage from "../MainPages/MainPage";
 import Navbar from "../MainPages/Navbar";
 
 function LogIn() 
@@ -93,15 +92,18 @@ function LogIn()
         </form>
         );
 
-    return( 
-            <div className = "main-page">
-                <Navbar></Navbar>
-                <div className = { "form-container" }>
-                    <h2> Enter credentials: </h2>
-                    <div className = "form-style">{ renderLoginForm } </div>
-                </div>
+    return(
+        <div className="login-page">
+            <Navbar></Navbar>
+            <div className={ "form-container-login" }>
+                <h2> Enter credentials: </h2>
+                <div className="form-style">{ renderLoginForm } </div>
             </div>
-          );
+            <div className={ "copyright" }>Image by <a
+                href="https://www.freepik.com/free-photo/composition-toy-airplane-passport-plant-leaves_4636248.htm#query=travel%20background&position=37&from_view=keyword&track=ais&uuid=62a6b086-5409-4903-96d2-1f1e0b1101c4">Freepik</a>
+            </div>
+        </div>
+    );
     }
 
 export default LogIn;

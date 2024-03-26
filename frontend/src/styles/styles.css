@@ -116,7 +116,7 @@ code
   flex-direction: column;
   display: block;
   font-size: 20px;
-  text-align: center; /* Center text horizontally */
+  text-align: center;
   }
 
 /*-------------------------Register_Login-----------------------*/
@@ -134,7 +134,7 @@ input[ type = "form-text" ]
   border: 2px solid rgba(0, 0, 0, 0);
   border-radius: 2%;
   height: 40px;
-  padding: 0px 6px;
+  padding: 0 6px;
   background-color: rgba(0, 0, 0, 0.45);
   color: white;
   }
@@ -144,7 +144,7 @@ input[ type = "password" ]
   border: 2px solid rgba(0, 0, 0, 0);
   border-radius: 2%;
   height: 40px;
-  padding: 0px 6px;
+  padding: 0 6px;
   background-color: rgba(0, 0, 0, 0.45);
   color: white;
   }
@@ -153,7 +153,7 @@ input[type = "form-text" ]:focus
   {
   border: 2px solid #555;
   height: 40px;
-  padding: 0px 6px;
+  padding: 0 6px;
   outline: none;
   color: white;
   }
@@ -173,7 +173,6 @@ input[type = "submit" ]
   border-radius: 2%;
   width: 30%;
   text-align: center;
-  /*border-radius: 6%;*/
   color: white;
   background: rgba(0, 0, 0, 0.55);
   padding: 9px 22px;
@@ -195,16 +194,20 @@ input[type = "submit" ]:hover
 button[ type = "form-navigate" ]
   {
   font-size: 14px;
-  border: 0px;
+  border: 0;
   border-radius: 2%;
   width: 80%;
   text-align: center;
-  /*border-radius: 6%;*/
   color: white;
   background: rgba(0, 0, 0, 0.55);
   padding: 9px;
   margin-top: 9px;
   }
+
+button[ type = "form-navigate" ]:hover
+{
+  background: rgba(0, 0, 0, 0.65);
+}
 
 .form-button-container
   {
@@ -220,7 +223,7 @@ button[ type = "form-navigate" ]
   border-radius: 2%;
   }
 
-.form-container
+.form-container-login
   {
   background-color: rgba(0, 0, 0, 0.55);
   width: 25%;
@@ -237,8 +240,28 @@ button[ type = "form-navigate" ]
   flex-direction: column;
   display: block;
   font-size: 20px;
-  text-align: center; /* Center text horizontally */
+  text-align: center;
   }
+
+.form-container-register
+{
+  background-color: rgba(0, 0, 0, 0.55);
+  width: 25%;
+  height: 64%;
+  position: absolute;
+  border-radius: 2%;
+  top: 43%;
+  left: 20%;
+  transform: translate(-50%, -50%);
+  color:white;
+  align-items: center;
+  padding: 20px;
+  justify-content: center;
+  flex-direction: column;
+  display: block;
+  font-size: 20px;
+  text-align: center;
+}
 
 .form-err-msg {
   color: #ffffff;

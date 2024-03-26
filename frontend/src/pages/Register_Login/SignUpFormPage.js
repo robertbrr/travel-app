@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 
 import "../../styles/styles.css"
+import Navbar from "../MainPages/Navbar";
 
 const SignUp = () => {
     const [ username, setUsername ] = useState( '' );
@@ -42,53 +43,59 @@ const SignUp = () => {
       = (
         <form onSubmit = { SignUpHandler }>
 
-            <div className = "text-input" >
-                <label className = 'centered-label'> Full Name </label>
+            <div className = "form-text-input" >
+                <label className = 'form-centered-label'> Full Name </label>
                 <input 
-                    type = "text" 
+                    type = "form-text"
                     required 
                     onChange={ ( e ) => setFullName( e.target.value ) }/>
             </div>
 
-            <div className = "text-input" >
-                <label className = 'centered-label'> Username </label>
+            <div className = "form-text-input" >
+                <label className = 'form-centered-label'> Username </label>
                 <input 
-                    type = "text" 
+                    type = "form-text"
                     required 
                     onChange={ ( e ) => setUsername( e.target.value ) }/>
             </div>
 
-            <div className = "text-input" >
-                <label className = 'centered-label'> Password </label>
+            <div className = "form-text-input" >
+                <label className = 'form-centered-label'> Password </label>
                 <input 
                     type = "password" 
                     required  
                     onChange={ ( e ) => setPassword( e.target.value ) }/>
             </div>
 
-            { errMsg && <div className = "err-msg"> { errMsg } </div> }
-
-            <div className = "button-container">
-                <input 
-                    type  = "submit" 
+            <div className = "form-button-container">
+                <input
+                    type  = "submit"
                     value = "Sign Up"
                 />
             </div>
 
-            <div className = 'centered-label'>
+            <div className = 'form-centered-label'>
                 <Link to = "/login" >
-                    <button type = "log-in-redirect"> Go back to login </button>
+                    <button type = "form-navigate"> Go back to login </button>
                 </Link>
             </div>
+
+            { errMsg && <div className = "form-err-msg"> { errMsg } </div> }
         </form>
         )
 
-    return( 
-        <div className = "app">
-            <h1> Fill in the form </h1>
-            <div className = "form-style">{ renderSignUpForm } </div>
-        </div> 
-        );
-    }
+    return(
+        <div className="register-page">
+            <Navbar></Navbar>
+            <div className={ "form-container-register" }>
+                <h2> Fill in the form </h2>
+                <div className="form-style">{ renderSignUpForm } </div>
+            </div>
+            <div className={ "copyright" }>Image by <a
+                href="https://www.freepik.com/free-photo/composition-toy-airplane-passport-plant-leaves_4636248.htm#query=travel%20background&position=37&from_view=keyword&track=ais&uuid=62a6b086-5409-4903-96d2-1f1e0b1101c4">Freepik</a>
+            </div>
+        </div>
+    );
+}
 
 export default SignUp;

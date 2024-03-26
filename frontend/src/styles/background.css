@@ -1,4 +1,6 @@
-/* Main page background image */
+/* Main pages background image */
+.login-page,
+.register-page,
 .main-page
     {
     background-image: url("../images/main_page.jpg") ;
