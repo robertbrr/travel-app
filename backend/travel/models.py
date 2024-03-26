@@ -1,10 +1,10 @@
-from django.core import serializers
 from django.db import models
 
 #-----------------------------------------------------------
 #                 DESTINATIONS MODEL
 #-----------------------------------------------------------
 class Destination( models.Model ):
+    objects = None
     name             = models.CharField( max_length= 100 )
     location         = models.CharField( max_length = 100 )
     price_nightly    = models.DecimalField( default = 0.0, decimal_places = 2, max_digits = 10 )

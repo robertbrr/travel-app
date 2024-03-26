@@ -1,10 +1,15 @@
+/* React */
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-
-import * as userStorage from "../../utilities/UserSession";
-import "../../styles/styles.css"
+/* Components */
 import Navbar from "../MainPages/Navbar";
+
+/* Utilities */
+import * as userStorage from "../../utilities/UserSession";
+
+/* Styles */
+import "../../styles/styles.css"
 
 function LogIn() 
     {

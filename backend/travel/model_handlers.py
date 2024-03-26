@@ -8,23 +8,23 @@ class DestinationHandler:
 
     # Class methods
     @staticmethod
-    def LoadJSON( dictionary ):
+    def LoadJSON( _dictionary ):
         destination = Destination()
-        for key in dictionary.keys():
-            destination.__setattr__( key, dictionary[ key ] )
-        return( destination )
+        for key in _dictionary.keys():
+            destination.__setattr__( key, _dictionary[ key ] )
+        return destination
 
     @staticmethod
-    def LoadExisting( id ):
-        return( Destination.objects.get( pk = id ) )
+    def LoadExisting( _id ):
+        return Destination.objects.get( pk = _id )
 
     @staticmethod
-    def ToJSON( destination ):
-        return( serializers.serialize( "json", [ destination ] ) )
+    def ToJSON( _destination ):
+        return serializers.serialize( "json", [ _destination ] )
 
     @staticmethod
-    def Save( destination ):
-        destination.save()
+    def Save( _destination ):
+        _destination.save()
 
     @staticmethod
     def DeleteById( _id ):
@@ -32,7 +32,7 @@ class DestinationHandler:
 
     @staticmethod
     def AllToJSON():
-        return( serializers.serialize("json", Destination.objects.all() ) )
+        return serializers.serialize( "json", Destination.objects.all() )
 
     @staticmethod
     def GetByLocation( _location ):
@@ -40,7 +40,7 @@ class DestinationHandler:
 
     @staticmethod
     def ToJSONArray( _destinations ):
-        return (serializers.serialize("json", _destinations ) )
+        return serializers.serialize( "json", _destinations )
 
 
 
@@ -50,8 +50,8 @@ class DestinationHandler:
 class UserHandler:
     # Class methods
     @staticmethod
-    def ToJSON( user ):
-        return( serializers.serialize( "json", [ user ] ) )
+    def ToJSON( _user ):
+        return( serializers.serialize( "json", [ _user ] ) )
 
     @staticmethod
     def LoginValidate( _credentials ):
@@ -62,10 +62,10 @@ class UserHandler:
             raise Exception( "Invalid credentials!" )
 
     @staticmethod
-    def Register( dictionary ):
+    def Register( _dictionary ):
         user = User()
-        for key in dictionary.keys():
-            user.__setattr__(key, dictionary[key])
+        for key in _dictionary.keys():
+            user.__setattr__(key, _dictionary[key])
         try:
             userExisting = User.objects.get( username = user.username )
         except User.DoesNotExist:

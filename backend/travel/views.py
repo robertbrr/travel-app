@@ -1,6 +1,4 @@
 from django.http import HttpResponse, HttpResponseBadRequest
-from django.views.decorators.csrf import csrf_exempt
-
 from .model_handlers import DestinationHandler, UserHandler
 
 import json
@@ -12,6 +10,7 @@ import json
 def crud_destination( _request ):
     if _request.method == "GET":
         try:
+            # Filter by location if specified
             _location = _request.GET.get( 'location', '' )
             if _location == '':
                 return HttpResponse( DestinationHandler.AllToJSON(), content_type = "application/json" )
@@ -35,7 +34,7 @@ def crud_destination( _request ):
             return HttpResponseBadRequest( "Failed to update destination. {}".format( str( exc ) ) )
     elif _request.method == "DELETE":
         try:
-            DestinationHandler.DeleteById( id = _request.GET.get( 'id', '' ) )
+            DestinationHandler.DeleteById( _request.GET.get( 'id', '' ) )
             return HttpResponse( "Successfully deleted!" )
         except Exception as exc:
             return HttpResponseBadRequest( "Failed to delete destination. {}".format( str( exc ) ) )
@@ -43,7 +42,7 @@ def crud_destination( _request ):
 
 
 #-----------------------------------------------------------
-#                      USER ENDPOINTS
+#              LOGIN AND REGISTER ENDPOINTS
 #-----------------------------------------------------------
 def login( _request ):
     if _request.method == "POST":

@@ -205,9 +205,9 @@ button[ type = "form-navigate" ]
   }
 
 button[ type = "form-navigate" ]:hover
-{
+  {
   background: rgba(0, 0, 0, 0.65);
-}
+  }
 
 .form-button-container
   {
@@ -244,7 +244,7 @@ button[ type = "form-navigate" ]:hover
   }
 
 .form-container-register
-{
+  {
   background-color: rgba(0, 0, 0, 0.55);
   width: 25%;
   height: 64%;
@@ -261,11 +261,12 @@ button[ type = "form-navigate" ]:hover
   display: block;
   font-size: 20px;
   text-align: center;
-}
+  }
 
-.form-err-msg {
+.form-err-msg
+  {
   color: #ffffff;
   text-align: center;
   font-size: 14px;
   padding: 3%;
-}
+  }

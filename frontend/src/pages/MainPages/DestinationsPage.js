@@ -8,8 +8,8 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { dateFromDateTime, getTomorrowDate } from "../../utilities/utilities";
-import dayjs from 'dayjs';
 import mockDest from "../../images/destinations/liberty.jpg"
+import dayjs from 'dayjs';
 
 /* Styles */
 import "../../styles/background.css"
@@ -60,6 +60,7 @@ function DestinationsPage()
             })
         }
 
+    /* Div helper */
     const buildDestinationDiv = ( _destination ) =>
         {
         return(
@@ -74,8 +75,7 @@ function DestinationsPage()
             </div>
             )
         }
-
-
+    
     /* Date handlers */
     const setFromHandler = ( _date ) =>
         {

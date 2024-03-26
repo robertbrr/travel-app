@@ -3,12 +3,13 @@ import { useState } from "react";
 import { NavLink, useNavigate,  } from 'react-router-dom'
 
 /* Components */
+import companyLogo from '../../images/globert_logo.png'
 
+/* Utilities */
+import { clearUserData, isAgentLoggedIn, isClientLoggedIn } from "../../utilities/UserSession";
 
 /* Styles */
-import companyLogo from '../../images/globert_logo.png'
 import '../../styles/navbar.css'
-import { clearUserData, isAgentLoggedIn, isClientLoggedIn } from "../../utilities/UserSession";
 
 const Navbar = () => {
 

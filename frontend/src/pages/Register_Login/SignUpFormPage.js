@@ -1,8 +1,12 @@
+/* React */
 import React, { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 
-import "../../styles/styles.css"
+/* Components */
 import Navbar from "../MainPages/Navbar";
+
+/* Styles */
+import "../../styles/styles.css"
 
 const SignUp = () => {
     const [ username, setUsername ] = useState( '' );
