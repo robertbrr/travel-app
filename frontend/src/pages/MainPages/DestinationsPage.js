@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 
 /* Components */
-import MainSidebar from "./MainSidebar";
+import Navbar from "./Navbar";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -64,7 +64,7 @@ function DestinationsPage()
         {
         return(
             <div className = { "destination-item" }>
-                <img src = { _destination.url } alt = "dest-pic" className = { "destination-item-pic" } />
+                <img src = { mockDest } alt = "dest-pic" className = { "destination-item-pic" } />
                 <div className = "destination-item-name">{ _destination.name }</div>
                 <div className = "destination-item-loc">{ _destination.location }</div>
                 {
@@ -100,7 +100,7 @@ function DestinationsPage()
     /* JSX */
     return(
         <div className = "destinations-page">
-            <MainSidebar></MainSidebar>
+            <Navbar></Navbar>
             <div className = "dates-container" >
                 <div className = "date-container">
                     <label>Start Date</label>

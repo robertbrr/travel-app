@@ -10,7 +10,7 @@ import companyLogo from '../../images/globert_logo.png'
 import '../../styles/navbar.css'
 import { clearUserData, isAgentLoggedIn, isClientLoggedIn } from "../../utilities/UserSession";
 
-const MainSidebar = () => {
+const Navbar = () => {
 
     const [ location, setLocation ] = useState( "" )
     const navigate = useNavigate();
@@ -86,4 +86,4 @@ const MainSidebar = () => {
     )
 }
 
-export default MainSidebar
+export default Navbar

@@ -1,5 +1,5 @@
 /* Components */
-import MainSidebar from "./MainSidebar";
+import Navbar from "./Navbar";
 
 /* Styles */
 import "../../styles/background.css"
@@ -9,7 +9,7 @@ function MainPage()
     /* JSX */
     return(
         <div className = "main-page">
-            <MainSidebar></MainSidebar>
+            <Navbar></Navbar>
             <div style = { { paddingTop: "250px" } } ></div>
             <div className = { "intro-text" }> Wander. Explore. Discover </div>
             <div className = { "intro-text" }> Welcome to Globert Travel - Your passport to adventure! </div>

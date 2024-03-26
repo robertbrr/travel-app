@@ -1,5 +1,5 @@
 /* Components */
-import MainSidebar from "./MainSidebar";
+import Navbar from "./Navbar";
 import companyLogo from '../../images/globert_logo.png'
 
 /* Styles */
@@ -10,7 +10,7 @@ function ContactPage()
     /* JSX */
     return(
         <div className = "contact-page">
-            <MainSidebar></MainSidebar>
+            <Navbar></Navbar>
             <div className="contact-container">
                 <img src = { companyLogo } style={ { width: '100%', height: 'auto',  transform: "scale(0.5)" } } alt = 'Globert Logo'/>
                 <div style = { { paddingTop: "30px" } } > Phone: 0766121009</div>

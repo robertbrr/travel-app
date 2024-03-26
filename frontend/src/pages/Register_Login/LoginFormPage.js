@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 import * as userStorage from "../../utilities/UserSession";
 import "../../styles/styles.css"
+import MainPage from "../MainPages/MainPage";
+import Navbar from "../MainPages/Navbar";
 
 function LogIn() 
     {
@@ -57,44 +59,48 @@ function LogIn()
     const renderLoginForm                           /* Login Form                   */
       = (
         <form onSubmit = { LogInHandler }>
-            <div className = "text-input" >
-                <label className = 'centered-label'> Username </label>
+            <div className = "form-text-input" >
+                <label className = 'form-centered-label'> Username </label>
                 <input 
-                    type = "text"  
+                    type = "form-text"
                     required 
                     onChange={ ( e ) => setUsername( e.target.value ) }
                 />
             </div>
 
-            <div className = "text-input" >
-            <label className = 'centered-label'> Password </label>
+            <div className = "form-text-input" >
+            <label className = 'form-centered-label'> Password </label>
                 <input 
-                    type = "password" 
+                    type = "password"
                     required  
                     onChange={ ( e ) => setPassword( e.target.value ) } 
                 />
             </div>
             
-            { errMsg && <div className = "err-msg"> { errMsg } </div> }
 
-            <div className = "button-container" >
-                <input 
-                    type  = "submit" 
+            <div className = "form-button-container" >
+                <input
+                    type  = "submit"
                     value = "Log In"
                 />
             </div>
 
             <Link to = "/register">
-                <button type = "sign-up-redirect" > Click here to create an account </button>
+                <button type = "form-navigate" > Click here to create an account </button>
             </Link>
+
+            { errMsg && <div className = "form-err-msg"> { errMsg } </div> }
         </form>
         );
 
     return( 
-            <div className = "app">
-                <h1> Enter credentials: </h1>
-                <div className = "form-style">{ renderLoginForm } </div>
-            </div> 
+            <div className = "main-page">
+                <Navbar></Navbar>
+                <div className = { "form-container" }>
+                    <h2> Enter credentials: </h2>
+                    <div className = "form-style">{ renderLoginForm } </div>
+                </div>
+            </div>
           );
     }
 

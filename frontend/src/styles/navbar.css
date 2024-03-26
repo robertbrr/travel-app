@@ -81,6 +81,27 @@ body
   align-items: center;
   }
 
+.nav-elements ul li button
+{
+  border: none;
+  padding-left: 25px;
+  padding-right: 25px;
+  display: flex;
+  font-size: 17px;
+  font-weight: 600;
+  color: #d3d3d3;
+  text-decoration: none;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0)
+}
+
+.nav-elements ul li button:hover
+{
+  color: #adadad;
+  background-color: rgba(0, 0, 0, 0.13);
+  border-radius: 2px;
+}
+
 /* --------------------------Search bar------------------------ */
 .nav-search
   {
