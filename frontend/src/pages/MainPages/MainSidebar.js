@@ -1,11 +1,35 @@
+/* React */
+import { useState } from "react";
+import { NavLink, useNavigate,  } from 'react-router-dom'
+
 /* Components */
-import { NavLink } from 'react-router-dom'
+
 
 /* Styles */
 import companyLogo from '../../images/globert_logo.png'
 import '../../styles/navbar.css'
+import { clearUserData, isAgentLoggedIn, isClientLoggedIn } from "../../utilities/UserSession";
 
 const MainSidebar = () => {
+
+    const [ location, setLocation ] = useState( "" )
+    const navigate = useNavigate();
+
+    const LogOutHandler = () =>
+        {
+        if( window.confirm( "Are you sure you want to log out?" ) )
+            {
+            clearUserData()
+            navigate( "/home" )
+            }
+        }
+
+    const SearchHandler = async( e ) =>
+        {
+        e.preventDefault();
+        navigate( "/destinations", { state: location } )
+        window.location.reload()
+        }
 
     /* JSX */
     return (
@@ -31,13 +55,29 @@ const MainSidebar = () => {
                             </div>
                         </li>
                         <li>
-                            <input className = "nav-search" type = "text" placeholder = "Search destinations.."></input>
+                            <form onSubmit={ SearchHandler }>
+                                <input className = "nav-search"
+                                       type = "text"
+                                       placeholder = "Search destinations.."
+                                       onChange = { ( e ) => setLocation( e.target.value ) }
+                                >
+                                </input>
+                            </form>
                         </li>
+                        {
+                        ( !isClientLoggedIn() && !isAgentLoggedIn() ) &&
                         <li>
-                            <NavLink to = "/login">Log In</NavLink>
+                            <NavLink  to="/login">Log In</NavLink>
                         </li>
+                        }
+                        {
+                        ( isClientLoggedIn() || isAgentLoggedIn() ) &&
                         <li>
-                            <NavLink to= "/contact">Contact</NavLink>
+                            <button onClick = { LogOutHandler } >Log Out</button>
+                        </li>
+                        }
+                        <li>
+                            <NavLink to="/contact">Contact</NavLink>
                         </li>
                     </ul>
                 </div>
