@@ -1,6 +1,6 @@
 /* React */
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 /* Components */
 import Navbar from "./Navbar";
@@ -22,6 +22,7 @@ import "../../styles/background.css"
 function DestinationsPage()
     {
     /* constants */
+    const navigate = useNavigate()
     const [ from, setFrom ] = useState( dateFromDateTime( new Date() ) );
     const [ to, setTo ] = useState( dateFromDateTime( new Date() ) );
     const { state: locationName } = useLocation();
@@ -62,17 +63,52 @@ function DestinationsPage()
             })
         }
 
+    const deleteById = ( _id ) =>
+        {
+        const requestOptions
+            =  {
+            method: 'DELETE',
+            };
+
+        fetch( `http://localhost:8000/api/v1/destinations?id=${ _id }`, requestOptions )
+            .then( ( res ) => {
+            if( !res.ok )
+                {
+                return( res.text().then( text => { throw new Error( text ? text : "Error" ) } ) );
+                }
+            })
+            .then( () => {
+                alert( "Successfully deleted." );
+                getLocations();
+            })
+            .catch( ( err ) => {
+                alert( "Failed to delete destination" );
+            })
+        }
+
+    /* Button handlers */
+    const deleteDestinationHandler = ( _id ) =>
+        {
+        if( window.confirm( "Are you sure you want to delete the selected destination?" ) )
+            {
+            deleteById( _id )
+            }
+        }
+
     /* Div helper */
     const buildDestinationDiv = ( _destination ) =>
         {
         return(
             <div className = { "destination-item" }>
                 <img src = { mockDest } alt = "dest-pic" className = { "destination-item-pic" } />
-                <div className = "destination-item-name">{ _destination.name }</div>
-                <div className = "destination-item-loc">{ _destination.location }</div>
+                <div className = "destination-item-name">{ _destination.fields.name }</div>
+                <div className = "destination-item-loc">{ _destination.fields.location }</div>
                 {
                 isAgentLoggedIn() &&
-                 <div> PPEI </div>
+                 <div>
+                     <button onClick = { () => { navigate( "/destinations/edit", { state: _destination } ) } }> Edit </button>
+                     <button onClick = { () => deleteDestinationHandler( _destination.pk ) } > Delete </button>
+                 </div>
                 }
             </div>
             )
@@ -133,7 +169,7 @@ function DestinationsPage()
                 {
                 destinationsArray.map( ( dest ) =>
                     {
-                    return( buildDestinationDiv( dest.fields ) )
+                    return( buildDestinationDiv( dest ) )
                     })
                 }
             </div>

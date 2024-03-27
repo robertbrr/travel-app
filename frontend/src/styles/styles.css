@@ -62,7 +62,8 @@ code
 .destinations-container
   {
   display: grid;
-  grid-template-columns: repeat( 4, auto );
+  /*grid-template-columns: repeat( 4, auto );*/
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   padding: 0;
   overflow: scroll;
   max-height: 510px;
@@ -242,6 +243,18 @@ button[ type = "form-navigate" ]:hover
   font-size: 20px;
   text-align: center;
   }
+
+.form-container-edit-dest
+{
+  background-color: rgba(0, 0, 0, 0.55);
+  color: white;
+  padding-top: 10px;
+  text-align: center;
+  margin-top: 1%;
+  margin-left: 35%;
+  margin-right: 35%;
+
+}
 
 .form-container-register
   {

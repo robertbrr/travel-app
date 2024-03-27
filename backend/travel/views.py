@@ -27,8 +27,7 @@ def crud_destination( _request ):
             return HttpResponseBadRequest( "Failed to save destination. {}".format( str( exc ) ) )
     elif _request.method == "PUT":
         try:
-            destination = DestinationHandler.LoadJSON( json.loads( _request.body ) )
-            DestinationHandler.Save( destination )
+            DestinationHandler.Save( DestinationHandler.LoadJSON( json.loads( _request.body ) ) )
             return HttpResponse( "Successfully updated!" )
         except Exception as exc:
             return HttpResponseBadRequest( "Failed to update destination. {}".format( str( exc ) ) )
@@ -38,6 +37,8 @@ def crud_destination( _request ):
             return HttpResponse( "Successfully deleted!" )
         except Exception as exc:
             return HttpResponseBadRequest( "Failed to delete destination. {}".format( str( exc ) ) )
+    elif _request.method == "OPTIONS":
+        return HttpResponse( status = 200 )
     return HttpResponseBadRequest( "Bad request." )
 
 

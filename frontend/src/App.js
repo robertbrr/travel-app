@@ -7,6 +7,7 @@ import DestinationsPage from "./pages/MainPages/DestinationsPage";
 import ContactPage from "./pages/MainPages/ContactPage";
 import LoginFormPage from "./pages/Register_Login/LoginFormPage";
 import SignUpFormPage from "./pages/Register_Login/SignUpFormPage";
+import AgentDestinationEditPage from "./pages/AgentPages/AgentDestinationEditPage";
 
 /* Styles */
 // import './styles.css'
@@ -18,6 +19,7 @@ function App() {
             <Route path ="/" element={<> <MainPage/> </>}/>
             <Route path ="/home" element={<> <MainPage/> </>}/>
             <Route path ="/destinations" element={<> <DestinationsPage/> </>}/>
+            <Route path ="/destinations/edit" element={<> <AgentDestinationEditPage/> </>}/>
             <Route path ="/offers" element={<> <DestinationsPage/> </>}/>
             <Route path ="/contact" element={<> <ContactPage/> </>}/>
             <Route path ="/login" element={<> <LoginFormPage/> </>}/>

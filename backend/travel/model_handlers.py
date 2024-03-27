@@ -7,6 +7,7 @@ from django.core import serializers
 class DestinationHandler:
 
     # Class methods
+
     @staticmethod
     def LoadJSON( _dictionary ):
         destination = Destination()
