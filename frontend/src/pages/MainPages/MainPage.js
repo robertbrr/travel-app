@@ -3,9 +3,41 @@ import Navbar from "./Navbar";
 
 /* Styles */
 import "../../styles/background.css"
+import { useEffect, useState } from "react";
+
 
 function MainPage()
     {
+
+    const [geoLoc, setGeoLoc ] = useState( {} )
+
+    useEffect( () =>
+        {
+        requestGeoLocation();
+        }, [] );
+
+    useEffect( () =>
+        {
+        localStorage.setItem( "GPS location", JSON.stringify( { lat: geoLoc.latitude, lon: geoLoc.longitude } ) )
+        }, [ geoLoc ] );
+
+    const requestGeoLocation = () =>
+        {
+        if( navigator.geolocation )
+            {
+            navigator.geolocation.getCurrentPosition(
+                ( _location) =>
+                    {
+                    setGeoLoc( _location.coords )
+                    },
+                ( _ ) =>
+                    {
+                    alert( "Failed to get your geolocation" );
+                    }
+                )
+            }
+        }
+
     /* JSX */
     return(
         <div className = "main-page">

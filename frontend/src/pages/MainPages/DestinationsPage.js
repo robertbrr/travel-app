@@ -1,5 +1,6 @@
 /* React */
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 /* Components */
 import Navbar from "./Navbar";
@@ -11,10 +12,11 @@ import { dateFromDateTime, getTomorrowDate } from "../../utilities/utilities";
 import mockDest from "../../images/destinations/liberty.jpg"
 import dayjs from 'dayjs';
 
+/* Utilities */
+import { isAgentLoggedIn } from "../../utilities/UserSession";
+
 /* Styles */
 import "../../styles/background.css"
-import { isAgentLoggedIn } from "../../utilities/UserSession";
-import { useLocation } from "react-router-dom";
 
 
 function DestinationsPage()
