@@ -20,7 +20,7 @@ import "../../styles/background.css"
 import "../../styles/styles.css"
 
 
-function DestinationsPage()
+function DestinationsPage( { offer_filter } )
     {
     /* constants */
     const navigate = useNavigate()
@@ -57,6 +57,10 @@ function DestinationsPage()
                 return( res.json() );
             })
             .then( ( res ) => {
+                if( offer_filter === true )
+                    {
+                    res = res.filter( e => e.fields.percentage_offer != 0 )
+                    }
                 setDestinationsArray( res );
             })
             .catch( ( err ) => {
