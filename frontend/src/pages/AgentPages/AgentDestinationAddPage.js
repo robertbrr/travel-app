@@ -15,6 +15,7 @@ function AgentDestinationAddPage()
     const [ price, setPrice ] = useState( '' )
     const [ offer, setOffer ] = useState( '' )
     const [ spots, setSpots ] = useState( '' )
+    const [ path, setPath ] = useState( '' )
 
     const AddHandler = async( e ) =>
         {
@@ -31,7 +32,8 @@ function AgentDestinationAddPage()
                     location: location,
                     price_nightly: price,
                     percentage_offer: offer,
-                    spots_available: spots
+                    spots_available: spots,
+                    path_img: path
                 })
         };
 
@@ -60,7 +62,7 @@ function AgentDestinationAddPage()
                 <input
                     type="form-text"
                     required
-                    value = { name }
+                    value={ name }
                     onChange={ ( e ) => setName( e.target.value ) }
                 />
             </div>
@@ -70,7 +72,7 @@ function AgentDestinationAddPage()
                 <input
                     type="form-text"
                     required
-                    value = { location }
+                    value={ location }
                     onChange={ ( e ) => setLocation( e.target.value ) }
                 />
             </div>
@@ -80,7 +82,7 @@ function AgentDestinationAddPage()
                 <input
                     type="form-text"
                     required
-                    value = { price }
+                    value={ price }
                     onChange={ ( e ) => setPrice( e.target.value ) }
                 />
             </div>
@@ -90,7 +92,7 @@ function AgentDestinationAddPage()
                 <input
                     type="form-text"
                     required
-                    value = { offer }
+                    value={ offer }
                     onChange={ ( e ) => setOffer( e.target.value ) }
                 />
             </div>
@@ -100,8 +102,18 @@ function AgentDestinationAddPage()
                 <input
                     type="form-text"
                     required
-                    value = { spots }
+                    value={ spots }
                     onChange={ ( e ) => setSpots( e.target.value ) }
+                />
+            </div>
+
+            <div className="form-text-input">
+                <label className='form-centered-label'> Image URL</label>
+                <input
+                    type="form-text"
+                    required
+                    value={ path }
+                    onChange={ ( e ) => setPath( e.target.value ) }
                 />
             </div>
 
@@ -120,11 +132,11 @@ function AgentDestinationAddPage()
         <div className={ "destinations-page" }>
             <Navbar></Navbar>
             {
-            isAgentLoggedIn() &&
-            <div className={ "form-container-edit-dest" }>
-                <h3> Add destination </h3>
-                <div className="form-style">{ renderDestinationEditForm } </div>
-            </div>
+                isAgentLoggedIn() &&
+                <div className={ "form-container-edit-dest" }>
+                    {/*<h3> Add destination </h3>*/}
+                    <div className="form-style">{ renderDestinationEditForm } </div>
+                </div>
             }
         </div>
         );

@@ -105,7 +105,7 @@ function DestinationsPage( { offer_filter } )
         {
         return(
             <div className = { "destination-item" }>
-                <img src = { mockDest } alt = "dest-pic" className = { "destination-item-pic" } />
+                <img src = { _destination.fields.path_img } alt = "dest-pic" className = { "destination-item-pic" } />
                 <div className = "destination-item-name">{ _destination.fields.name }, { _destination.fields.location }</div>
                 <div className = "destination-item-loc">Price: { _destination.fields.price_nightly }$ </div>
                 <div className = "destination-item-loc">Spots left: { _destination.fields.spots_available } </div>

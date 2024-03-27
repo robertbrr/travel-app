@@ -10,6 +10,7 @@ class Destination( models.Model ):
     price_nightly    = models.DecimalField( default = 0.0, decimal_places = 2, max_digits = 10 )
     percentage_offer = models.DecimalField( default = 0.0, decimal_places = 2, max_digits = 10 )
     spots_available  = models.IntegerField( default = 0.0 )
+    path_img         = models.FilePathField( default= '' )
 
     def __str__(self):
         return self.name

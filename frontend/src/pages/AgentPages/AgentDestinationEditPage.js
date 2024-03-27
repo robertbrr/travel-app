@@ -17,6 +17,7 @@ function AgentDestinationEditPage()
     const [ price, setPrice ] = useState( '' )
     const [ offer, setOffer ] = useState( '' )
     const [ spots, setSpots ] = useState( '' )
+    const [ path, setPath ] = useState( '' )
 
 
     useEffect( () =>
@@ -29,6 +30,7 @@ function AgentDestinationEditPage()
             setPrice( destination.fields.price_nightly )
             setOffer( destination.fields.percentage_offer )
             setSpots( destination.fields.spots_available )
+            setPath( destination.fields.path_img )
             }
         }, [] );
 
@@ -48,7 +50,8 @@ function AgentDestinationEditPage()
                     location: location,
                     price_nightly: price,
                     percentage_offer: offer,
-                    spots_available: spots
+                    spots_available: spots,
+                    path_img: path
                     })
         };
 
@@ -77,7 +80,7 @@ function AgentDestinationEditPage()
                 <input
                     type="form-text"
                     required
-                    value = { name }
+                    value={ name }
                     onChange={ ( e ) => setName( e.target.value ) }
                 />
             </div>
@@ -87,7 +90,7 @@ function AgentDestinationEditPage()
                 <input
                     type="form-text"
                     required
-                    value = { location }
+                    value={ location }
                     onChange={ ( e ) => setLocation( e.target.value ) }
                 />
             </div>
@@ -97,7 +100,7 @@ function AgentDestinationEditPage()
                 <input
                     type="form-text"
                     required
-                    value = { price }
+                    value={ price }
                     onChange={ ( e ) => setPrice( e.target.value ) }
                 />
             </div>
@@ -107,7 +110,7 @@ function AgentDestinationEditPage()
                 <input
                     type="form-text"
                     required
-                    value = { offer }
+                    value={ offer }
                     onChange={ ( e ) => setOffer( e.target.value ) }
                 />
             </div>
@@ -117,8 +120,18 @@ function AgentDestinationEditPage()
                 <input
                     type="form-text"
                     required
-                    value = { spots }
+                    value={ spots }
                     onChange={ ( e ) => setSpots( e.target.value ) }
+                />
+            </div>
+
+            <div className="form-text-input">
+                <label className='form-centered-label'> Image URL </label>
+                <input
+                    type="form-text"
+                    required
+                    value={ path }
+                    onChange={ ( e ) => setPath( e.target.value ) }
                 />
             </div>
 
@@ -137,11 +150,11 @@ function AgentDestinationEditPage()
         <div className={ "destinations-page" }>
             <Navbar></Navbar>
             {
-            isAgentLoggedIn() &&  destination &&
-            <div className={ "form-container-edit-dest" }>
-                <h3> Edit destination </h3>
-                <div className="form-style">{ renderDestinationEditForm } </div>
-            </div>
+                isAgentLoggedIn() && destination &&
+                <div className={ "form-container-edit-dest" }>
+                    {/*<h3> Edit destination </h3>*/}
+                    <div className="form-style">{ renderDestinationEditForm } </div>
+                </div>
             }
         </div>
     );
