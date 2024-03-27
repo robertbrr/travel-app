@@ -17,6 +17,7 @@ import { isAgentLoggedIn } from "../../utilities/UserSession";
 
 /* Styles */
 import "../../styles/background.css"
+import "../../styles/styles.css"
 
 
 function DestinationsPage()
@@ -101,15 +102,33 @@ function DestinationsPage()
         return(
             <div className = { "destination-item" }>
                 <img src = { mockDest } alt = "dest-pic" className = { "destination-item-pic" } />
-                <div className = "destination-item-name">{ _destination.fields.name }</div>
-                <div className = "destination-item-loc">{ _destination.fields.location }</div>
+                <div className = "destination-item-name">{ _destination.fields.name }, { _destination.fields.location }</div>
+                <div className = "destination-item-loc">Price: { _destination.fields.price_nightly }$ </div>
+                <div className = "destination-item-loc">Spots left: { _destination.fields.spots_available } </div>
                 {
-                isAgentLoggedIn() &&
-                 <div>
-                     <button onClick = { () => { navigate( "/destinations/edit", { state: _destination } ) } }> Edit </button>
-                     <button onClick = { () => deleteDestinationHandler( _destination.pk ) } > Delete </button>
-                 </div>
+                _destination.fields.percentage_offer != 0 &&
+                <div className="destination-item-loc">{ _destination.fields.percentage_offer }% off </div>
                 }
+                {
+                _destination.fields.percentage_offer == 0 &&
+                <div className="destination-item-loc">Full price </div>
+                }
+                <div className={ "crud-bttn-ctnr" } >
+                    {
+                    isAgentLoggedIn() &&
+                    <button type = "crud" onClick = { () => { navigate( "/destinations/edit", { state: _destination } ) } }> Edit </button>
+                    }
+                    {
+                    isAgentLoggedIn() &&
+                    <button type = "crud" onClick = { () => deleteDestinationHandler( _destination.pk ) } > Delete </button>
+                    }
+                    {
+                    !isAgentLoggedIn() &&
+                    <button type = "crud" > Schedule </button>
+                    }
+                 </div>
+
+
             </div>
             )
         }
@@ -164,6 +183,12 @@ function DestinationsPage()
                         </DemoContainer>
                     </LocalizationProvider>
                 </div>
+
+                {
+                isAgentLoggedIn() &&
+                    <button  type = "create-dest"  onClick = { () => { navigate( "/destinations/add" ) } }>Create</button>
+                }
+
             </div>
             <div className = "destinations-container" >
                 {

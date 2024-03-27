@@ -1,67 +1,50 @@
 import Navbar from "../MainPages/Navbar";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { isAgentLoggedIn } from "../../utilities/UserSession";
 
 
-function AgentDestinationEditPage()
+function AgentDestinationAddPage()
     {
 
-    const { state: destination } = useLocation();
     const navigate = useNavigate()
     const [ errMsg, setErrMsg ] = useState( '' )
 
-    const [ id, setId ] = useState( 0 )
     const [ name, setName ] = useState( '' )
     const [ location, setLocation ] = useState( '' )
     const [ price, setPrice ] = useState( '' )
     const [ offer, setOffer ] = useState( '' )
     const [ spots, setSpots ] = useState( '' )
 
-
-    useEffect( () =>
-        {
-        if( destination !== null )
-            {
-            setId( destination.pk )
-            setName( destination.fields.name );
-            setLocation( destination.fields.location );
-            setPrice( destination.fields.price_nightly )
-            setOffer( destination.fields.percentage_offer )
-            setSpots( destination.fields.spots_available )
-            }
-        }, [] );
-
-    const EditHandler = async( e ) =>
+    const AddHandler = async( e ) =>
         {
         e.preventDefault();
 
         /* Format for POST register request*/
         const requestOptions
             = {
-            method: 'PUT',
+            method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(
-                    {
-                    id: id,
+                {
                     name: name,
                     location: location,
                     price_nightly: price,
                     percentage_offer: offer,
                     spots_available: spots
-                    })
+                })
         };
 
         /* Perform the request */
         fetch( `http://localhost:8000/api/v1/destinations`, requestOptions )
             .then( ( res ) => {
-                if( !res.ok )
-                    {
-                    return( res.text().then(text => { throw new Error( text ? text : "Error" ) }) );
-                    }
+            if( !res.ok )
+                {
+                return( res.text().then(text => { throw new Error( text ? text : "Error" ) }) );
+                }
             })
             .then( () => {
-                alert( "Destination edited successfully." );
+                alert( "Destination created successfully." );
                 navigate( "/destinations", { replace: true } );
             })
                 .catch( ( err ) => {
@@ -71,7 +54,7 @@ function AgentDestinationEditPage()
 
     const renderDestinationEditForm
         = (
-        <form onSubmit={ EditHandler }>
+        <form onSubmit={ AddHandler }>
             <div className="form-text-input">
                 <label className='form-centered-label'> Name </label>
                 <input
@@ -137,14 +120,14 @@ function AgentDestinationEditPage()
         <div className={ "destinations-page" }>
             <Navbar></Navbar>
             {
-            isAgentLoggedIn() &&  destination &&
+            isAgentLoggedIn() &&
             <div className={ "form-container-edit-dest" }>
-                <h3> Edit destination </h3>
+                <h3> Add destination </h3>
                 <div className="form-style">{ renderDestinationEditForm } </div>
             </div>
             }
         </div>
-    );
+        );
     }
 
-export default AgentDestinationEditPage
+export default AgentDestinationAddPage

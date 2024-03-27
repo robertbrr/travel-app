@@ -7,10 +7,9 @@ import DestinationsPage from "./pages/MainPages/DestinationsPage";
 import ContactPage from "./pages/MainPages/ContactPage";
 import LoginFormPage from "./pages/Register_Login/LoginFormPage";
 import SignUpFormPage from "./pages/Register_Login/SignUpFormPage";
+import AgentDestinationAddPage from "./pages/AgentPages/AgentDestinationAddPage";
 import AgentDestinationEditPage from "./pages/AgentPages/AgentDestinationEditPage";
 
-/* Styles */
-// import './styles.css'
 
 function App() {
   return (
@@ -20,6 +19,7 @@ function App() {
             <Route path ="/home" element={<> <MainPage/> </>}/>
             <Route path ="/destinations" element={<> <DestinationsPage/> </>}/>
             <Route path ="/destinations/edit" element={<> <AgentDestinationEditPage/> </>}/>
+            <Route path ="/destinations/add" element={<> <AgentDestinationAddPage/> </>}/>
             <Route path ="/offers" element={<> <DestinationsPage/> </>}/>
             <Route path ="/contact" element={<> <ContactPage/> </>}/>
             <Route path ="/login" element={<> <LoginFormPage/> </>}/>
