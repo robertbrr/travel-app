@@ -90,6 +90,16 @@ def crud_reservation( _request ):
             return HttpResponse( "Successfully created appointment!" )
         except Exception as exc:
             return HttpResponseBadRequest( "Failed to create appointment. {}".format(str(exc)))
+    elif _request.method == "GET":
+        try:
+            _location_id = _request.GET.get( "location", "" )
+            if _location_id == "":
+                return HttpResponseBadRequest( "Failed to retrieve reservations. Specified location invalid." )
+            return HttpResponse( ReservationHandler.ToJSONArray(ReservationHandler.GetByLocation( _location_id ) ),
+                                content_type="application/json" )
+        except Exception as exc:
+            return HttpResponseBadRequest( "Failed to retrieve reservations. {}".format( str( exc ) ) )
+
     elif _request.method == "OPTIONS":
         return HttpResponse( status = 200 )
     return HttpResponseBadRequest( "Bad request." )

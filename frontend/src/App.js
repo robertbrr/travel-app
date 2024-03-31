@@ -9,6 +9,7 @@ import LoginFormPage from "./pages/Register_Login/LoginFormPage";
 import SignUpFormPage from "./pages/Register_Login/SignUpFormPage";
 import AgentDestinationAddPage from "./pages/AgentPages/AgentDestinationAddPage";
 import AgentDestinationEditPage from "./pages/AgentPages/AgentDestinationEditPage";
+import AgentReservationPage from "./pages/AgentPages/AgentReservationPage";
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
             <Route path ="/" element={<> <MainPage/> </>}/>
             <Route path ="/home" element={<> <MainPage/> </>}/>
             <Route path ="/destinations" element={<> <DestinationsPage offer_filter = { false }/> </>}/>
+            <Route path ="/reservations" element={<> <AgentReservationPage/> </>}/>
             <Route path ="/destinations/edit" element={<> <AgentDestinationEditPage/> </>}/>
             <Route path ="/destinations/add" element={<> <AgentDestinationAddPage/> </>}/>
             <Route path ="/offers" element={<> <DestinationsPage offer_filter = { true } /> </>}/>

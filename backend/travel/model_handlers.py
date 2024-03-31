@@ -1,7 +1,9 @@
 import datetime
+import json
 
 from .models import Destination, User, Reservation
 from django.core import serializers
+
 
 #-----------------------------------------------------------
 #                 DESTINATIONS HANDLER
@@ -104,9 +106,12 @@ class ReservationHandler:
     def LoadJSON( _dictionary ):
         reservation = Reservation()
         reservation.destination = Destination()
+        reservation.person = User()
         for key in _dictionary.keys():
             if key == "destination_id":
                 reservation.destination.pk = _dictionary[ key ]
+            elif key == "client_id":
+                reservation.person.pk = _dictionary[ key ]
             else:
                 reservation.__setattr__( key, _dictionary[ key ] )
         return reservation
@@ -124,3 +129,14 @@ class ReservationHandler:
                 ( reservation.date_start < _date_start and reservation.date_end > _date_end ):
                 return True
         return False
+
+    @staticmethod
+    def GetByLocation( _location_id ):
+        return Reservation.objects.filter( destination__pk = _location_id )
+
+    @staticmethod
+    def ToJSONArray( _reservations ):
+        res_dict = eval( serializers.serialize( "json",  _reservations  ) )
+        for res_json, res_model in zip( res_dict, _reservations ):
+            res_json[ "fields" ][ "person" ] = res_model.person.name
+        return json.dumps( res_dict )

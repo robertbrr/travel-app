@@ -12,7 +12,7 @@ import { dateFromDateTime, getTomorrowDate } from "../../utilities/utilities";
 import dayjs from 'dayjs';
 
 /* Utilities */
-import { isAgentLoggedIn, isClientLoggedIn } from "../../utilities/UserSession";
+import { getCurrentUserData, isAgentLoggedIn, isClientLoggedIn } from "../../utilities/UserSession";
 
 /* Styles */
 import "../../styles/background.css"
@@ -23,8 +23,8 @@ function DestinationsPage( { offer_filter } )
     {
     /* constants */
     const navigate = useNavigate()
-    const [ from, setFrom ] = useState( dateFromDateTime( new Date() ) );
-    const [ to, setTo ] = useState( dateFromDateTime( getTomorrowDate() ) );
+    const [ from, setFrom ] = useState( dayjs( new Date() ) );
+    const [ to, setTo ] = useState( dayjs( getTomorrowDate() ) );
     const { state: locationName } = useLocation();
     const [ destinationsArray, setDestinationsArray ] = useState( [] );
 
@@ -46,7 +46,15 @@ function DestinationsPage( { offer_filter } )
             method: 'GET',
             };
 
-        let fetch_str = `http://localhost:8000/api/v1/destinations?start=${from}&end=${to}`;
+        let fetch_str = `http://localhost:8000/api/v1/destinations`;
+
+        /* Filter only for clients ( logged in or not )*/
+        if( !isAgentLoggedIn() )
+            {
+            fetch_str = fetch_str + `?start=${from}&end=${to}`
+            }
+
+        /* Filter by location only if specified */
         if( locationName !== null && locationName !== '' )
             {
             fetch_str = fetch_str + `?location=${locationName}`
@@ -61,6 +69,7 @@ function DestinationsPage( { offer_filter } )
                 return( res.json() );
             })
             .then( ( res ) => {
+                /* Filter by offers only if specified */
                 if( offer_filter === true )
                     {
                     res = res.filter( e => e.fields.percentage_offer != 0 )
@@ -97,6 +106,11 @@ function DestinationsPage( { offer_filter } )
         }
 
     /* Button handlers */
+    const viewReservationsHandler = ( _location ) =>
+        {
+        navigate( "/reservations", { state: _location } )
+        }
+
     const deleteDestinationHandler = ( _id ) =>
         {
         if( window.confirm( "Are you sure you want to delete the selected destination?" ) )
@@ -114,8 +128,9 @@ function DestinationsPage( { offer_filter } )
             body: JSON.stringify(
                 {
                     destination_id: _destination.pk,
-                    date_start: from,
-                    date_end: to,
+                    person_id: getCurrentUserData().id,
+                    date_start: from.format("YYYY-MM-DD"),
+                    date_end: to.format("YYYY-MM-DD"),
                     price: ( 1.0 - parseFloat( _destination.fields.percentage_offer ) / 100.0 ) * dayjs( to ).diff( from, 'day' ) * parseFloat( _destination.fields.price_nightly )
                 })
         };
@@ -163,6 +178,10 @@ function DestinationsPage( { offer_filter } )
                     <button type = "crud" onClick = { () => deleteDestinationHandler( _destination.pk ) } > Delete </button>
                     }
                     {
+                    isAgentLoggedIn() &&
+                    <button type = "crud" onClick = { () => viewReservationsHandler( _destination ) } > Reservations </button>
+                    }
+                    {
                     isClientLoggedIn() &&
                     <button type = "crud" onClick = { () => scheduleHandler( _destination ) } > Schedule </button>
                     }
@@ -176,22 +195,22 @@ function DestinationsPage( { offer_filter } )
     /* Date handlers */
     const setFromHandler = ( _date ) =>
         {
-        setFrom( dateFromDateTime( _date ) );
+        setFrom( dayjs( _date ));
         }
 
     const setToHandler = ( _date ) =>
         {
-        setTo( dateFromDateTime( _date ) );
+        setTo( dayjs( _date ) );
         }
 
     const disableDatesBeforePresent = ( _date ) =>
         {
-        return( dayjs( _date ).isBefore( dateFromDateTime( new Date() ) ) );
+        return( dayjs( _date ).isBefore( dayjs( new Date() ) ) );
         }
 
     const disableDatesBeforeFrom = ( _date ) =>
         {
-        return( dayjs( dateFromDateTime( _date ) ).isBefore( from ) );
+        return( dayjs( _date ) ).isBefore( dayjs( from ) );
         }
 
     /* JSX */
@@ -204,7 +223,7 @@ function DestinationsPage( { offer_filter } )
                     <LocalizationProvider dateAdapter = { AdapterDayjs } >
                         <DemoContainer components = { [ 'DatePicker' ] }>
                             <DatePicker
-                                 value={ dayjs( from ) }
+                                 value={ from  }
                                 // defaultValue = { dayjs( dateFromDateTime( new Date() ) ) }
                                 shouldDisableDate = { ( e ) => disableDatesBeforePresent( e.$d ) }
                                 onChange = { ( e ) => setFromHandler( e.$d ) }
@@ -217,7 +236,7 @@ function DestinationsPage( { offer_filter } )
                     <LocalizationProvider dateAdapter = { AdapterDayjs } >
                         <DemoContainer components = { [ 'DatePicker' ] }>
                             <DatePicker
-                                 value = { dayjs( to ) }
+                                 value = { to }
                                 // defaultValue = { dayjs( dateFromDateTime( getTomorrowDate() ) ) }
                                 shouldDisableDate = { ( e ) => disableDatesBeforeFrom( e.$d ) }
                                 onChange = { ( e ) => setToHandler( e.$d ) }

@@ -9,6 +9,7 @@
     }
 
 /* Contact page background image */
+.reservation-page,
 .destinations-page
     {
     background-image: url("../images/destinations_page.jpg") ;

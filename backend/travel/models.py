@@ -30,12 +30,12 @@ class User( models.Model ):
     password = models.CharField( max_length = 100 )
     role     = models.CharField( max_length = 2, choices = UserType.choices, default = UserType.CLIENT  )
 
-
 #-----------------------------------------------------------
 #                     RESERVATION MODEL
 #-----------------------------------------------------------
 class Reservation( models.Model ):
-    destination = Destination()
+    destination = models.ForeignKey(Destination, on_delete=models.CASCADE)
+    person      = models.ForeignKey(User, on_delete=models.CASCADE )
     date_made   = models.DateField( default = django.utils.timezone.now() )
     date_start  = models.DateField()
     date_end    = models.DateField()

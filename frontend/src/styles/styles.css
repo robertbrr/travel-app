@@ -63,7 +63,6 @@ code
 .destinations-container
   {
   display: grid;
-  /*grid-template-columns: repeat( 4, auto );*/
   grid-template-columns: 1fr 1fr 1fr 1fr;
   padding: 0;
   overflow: scroll;
@@ -316,3 +315,7 @@ button[ type = "create-dest" ]:hover
   {
 
   }
+
+.scheduled {
+  color: red;;
+}
