@@ -223,7 +223,7 @@ function DestinationsPage( { offer_filter } )
                     <LocalizationProvider dateAdapter = { AdapterDayjs } >
                         <DemoContainer components = { [ 'DatePicker' ] }>
                             <DatePicker
-                                 value={ from  }
+                                value={ from  }
                                 // defaultValue = { dayjs( dateFromDateTime( new Date() ) ) }
                                 shouldDisableDate = { ( e ) => disableDatesBeforePresent( e.$d ) }
                                 onChange = { ( e ) => setFromHandler( e.$d ) }

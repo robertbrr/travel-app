@@ -1,7 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Calendar from 'react-calendar';
-
 import { Line } from "react-chartjs-2";
 import {
     Chart as ChartJS,
@@ -21,6 +20,7 @@ import Navbar from "../MainPages/Navbar";
 
 function AgentReservationPage()
     {
+
     const { state: destination } = useLocation()
     const [ reservationsArray, setReservationsArray ] = useState([])
     const emptyMap = new Map([ [  0, 0 ],
@@ -117,70 +117,86 @@ function AgentReservationPage()
     return(
         <div className={"reservation-page"} >
             <Navbar></Navbar>
-            <div className="table-container">
-                <div> View reservations for { destination.fields.name } </div>
-                <table>
-                    <thead>
-                    <tr>
-                        <th className="left-align">Date created</th>
-                        <th className="left-align">Start date</th>
-                        <th className="left-align">End date</th>
-                        <th className="left-align">Client</th>
-                        <th className="left-align">Price</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {
-                        reservationsArray &&
-                        reservationsArray.map( item => (
-                            <tr key={ item.pk }>
-                                <td>{ item.fields.date_made }</td>
-                                <td>{ item.fields.date_start }</td>
-                                <td>{ item.fields.date_end }</td>
-                                <td>{ item.fields.person }</td>
-                                <td>{ item.fields.price }</td>
-                            </tr>
-                        ) )
-                    }
-                    </tbody>
-                </table>
-                <div>
-                    <Calendar
-                        value={ new Date() }
-                        tileContent={ tileContent }
-                    >
-                    </Calendar>
+            <div className = { "reservation-container" } >
+                <div className="table-container">
+                    <div className={ "table-title" } > Reservations for { destination.fields.name } </div>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th className="left-align">Date created</th>
+                            <th className="left-align">Start date</th>
+                            <th className="left-align">End date</th>
+                            <th className="left-align">Client</th>
+                            <th className="left-align">Price</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {
+                            reservationsArray &&
+                            reservationsArray.map( item => (
+                                <tr key={ item.pk }>
+                                    <td>{ item.fields.date_made }</td>
+                                    <td>{ item.fields.date_start }</td>
+                                    <td>{ item.fields.date_end }</td>
+                                    <td>{ item.fields.person }</td>
+                                    <td>{ item.fields.price }</td>
+                                </tr>
+                            ) )
+                        }
+                        </tbody>
+                    </table>
+                </div>
+                <div className={ "reservation-right-col" }>
+                    <div className="line-chart">
+                        <Line
+                            data={
+                                {
+                                    labels: [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ],
+                                    datasets:
+                                        [
+                                            {
+                                                data: Object.values( reservationsMap ),
+                                                backgroundColor: "rgb(255, 99, 132)",
+                                                pointBackgroundColor: "black",
+                                                borderColor: 'black',
+                                                responsive: false
+                                            },
+                                        ],
+                                }
+                            }
+                            options={
+                                {
+                                    maintainAspectRatio: false,
+                                    plugins:
+                                        {
+                                            legend: { display: false },
+                                            title: { display: true, text: 'Monthly reservations', color: 'black' }
+                                        },
+                                    scales: {
+                                        x: {
+                                            ticks: {
+                                                color: 'black'
+                                            }
+                                        },
+                                        y: {
+                                            ticks: {
+                                                color: 'black'
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        />
+                    </div>
+                    <div className={ "calendar-container" }>
+                        <Calendar
+                            value={ new Date() }
+                            tileContent={ tileContent }
+                        >
+                        </Calendar>
+                    </div>
                 </div>
 
-                <div className="line-chart">
-                    <Line
-                        data={
-                            {
-                                labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-                                datasets:
-                                    [
-                                        {
-                                            data: Object.values( reservationsMap ),
-                                            backgroundColor: "rgb(255, 99, 132)",
-                                            pointBackgroundColor: "black",
-                                            borderColor: 'black',
-                                            responsive: false
-                                        },
-                                    ],
-                            }
-                        }
-                        options={
-                            {
-                                maintainAspectRatio: false,
-                                plugins:
-                                    {
-                                        legend: { display: false },
-                                        title: { display: true, text: 'Monthly reservations' }
-                                    }
-                            }
-                        }
-                    />
-                </div>
             </div>
         </div>
     )
