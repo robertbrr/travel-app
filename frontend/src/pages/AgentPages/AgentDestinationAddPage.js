@@ -38,7 +38,7 @@ function AgentDestinationAddPage()
         };
 
         /* Perform the request */
-        fetch( `http://localhost:8000/api/v1/destinations`, requestOptions )
+        fetch( `https://localhost:8000/api/v1/destinations`, requestOptions )
             .then( ( res ) => {
             if( !res.ok )
                 {

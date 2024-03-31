@@ -24,7 +24,12 @@ SECRET_KEY = 'django-insecure-jutvj7&i1%u5-%=^ov+m=i!$y^#h81hgitnz%r2&t17zrp9#i%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-CORS_ALLOWED_ORIGINS = [ 'http://127.0.0.1:3000', 'http://localhost:3000' ]
+CORS_ALLOWED_ORIGINS = [
+    'http://127.0.0.1:3000',
+    'https://127.0.0.1:3000',
+    'http://localhost:3000' ,
+    'https://localhost:3000'
+]
 ALLOWED_HOSTS = [ 'localhost', '127.0.0.1' ]
 
 CORS_ORIGIN_ALLOW = True
@@ -33,6 +38,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 # Application definition
 
 INSTALLED_APPS = [
+    "django_extensions",
     'corsheaders',
     'travel.apps.TravelConfig',
     'django.contrib.admin',
@@ -125,3 +131,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True

@@ -46,12 +46,12 @@ function DestinationsPage( { offer_filter } )
             method: 'GET',
             };
 
-        let fetch_str = `http://localhost:8000/api/v1/destinations`;
+        let fetch_str = `https://localhost:8000/api/v1/destinations`;
 
         /* Filter only for clients ( logged in or not )*/
         if( !isAgentLoggedIn() )
             {
-            fetch_str = fetch_str + `?start=${from}&end=${to}`
+            fetch_str = fetch_str + `?start=${from.format("YYYY-MM-DD")}&end=${to.format("YYYY-MM-DD")}`
             }
 
         /* Filter by location only if specified */
@@ -89,7 +89,7 @@ function DestinationsPage( { offer_filter } )
             method: 'DELETE',
             };
 
-        fetch( `http://localhost:8000/api/v1/destinations?id=${ _id }`, requestOptions )
+        fetch( `https://localhost:8000/api/v1/destinations?id=${ _id }`, requestOptions )
             .then( ( res ) => {
             if( !res.ok )
                 {
@@ -135,7 +135,7 @@ function DestinationsPage( { offer_filter } )
                 })
         };
 
-        fetch( `http://localhost:8000/api/v1/reservations`, requestOptions )
+        fetch( `https://localhost:8000/api/v1/reservations`, requestOptions )
             .then( ( res ) => {
                 if( !res.ok )
                     {

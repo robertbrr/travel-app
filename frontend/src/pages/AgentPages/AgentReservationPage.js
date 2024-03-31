@@ -63,7 +63,7 @@ function AgentReservationPage()
             method: 'GET',
         };
 
-        let fetch_str = `http://localhost:8000/api/v1/reservations?location=${ destination.pk }`;
+        let fetch_str = `https://localhost:8000/api/v1/reservations?location=${ destination.pk }`;
         fetch( fetch_str, requestOptions )
             .then( ( res ) => {
             if( !res.ok )

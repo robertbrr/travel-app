@@ -29,7 +29,7 @@ const SignUp = () => {
             };
 
         /* Perform the request */
-        fetch( 'http://localhost:8000/api/v1/register', requestOptions )
+        fetch( 'https://localhost:8000/api/v1/register', requestOptions )
             .then( ( res ) => {
                 if( !res.ok )
                     {

@@ -36,7 +36,7 @@ function LogIn()
             };
 
         /* Perform the request */
-        fetch( 'http://localhost:8000/api/v1/login', requestOptions )
+        fetch( 'https://localhost:8000/api/v1/login', requestOptions )
             .then( ( res ) => {
                 if( !res.ok )
                     {
