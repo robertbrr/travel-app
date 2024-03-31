@@ -1,13 +1,12 @@
-from .models import Destination, User
+import datetime
+
+from .models import Destination, User, Reservation
 from django.core import serializers
 
 #-----------------------------------------------------------
 #                 DESTINATIONS HANDLER
 #-----------------------------------------------------------
 class DestinationHandler:
-
-    # Class methods
-
     @staticmethod
     def LoadJSON( _dictionary ):
         destination = Destination()
@@ -43,13 +42,31 @@ class DestinationHandler:
     def ToJSONArray( _destinations ):
         return serializers.serialize( "json", _destinations )
 
+    @staticmethod
+    def getAvailable( _date_start, _date_end ):
+        destinationsAll = Destination.objects.all()
+        destinationsAvailable = []
+        for destination in destinationsAll:
+            if destination.spots_available <= 0:
+                continue
+            if destination.spots_available >= 1:
+                destinationsAvailable.append(destination)
+                continue
+            if ReservationHandler.OverlapExists( datetime.datetime.strptime( _date_start, "%Y-%m-%d" ).date(),
+                                                 datetime.datetime.strptime( _date_end, "%Y-%m-%d" ).date(),
+                                                 destination.pk ):
+                continue
+            destinationsAvailable.append( destination )
+
+        return destinationsAvailable
+
+
 
 
 #-----------------------------------------------------------
 #                      USERS HANDLER
 #-----------------------------------------------------------
 class UserHandler:
-    # Class methods
     @staticmethod
     def ToJSON( _user ):
         return( serializers.serialize( "json", [ _user ] ) )
@@ -79,3 +96,31 @@ class UserHandler:
             user.save()
 
 
+#-----------------------------------------------------------
+#                      RESERVATIONS HANDLER
+#-----------------------------------------------------------
+class ReservationHandler:
+    @staticmethod
+    def LoadJSON( _dictionary ):
+        reservation = Reservation()
+        reservation.destination = Destination()
+        for key in _dictionary.keys():
+            if key == "destination_id":
+                reservation.destination.pk = _dictionary[ key ]
+            else:
+                reservation.__setattr__( key, _dictionary[ key ] )
+        return reservation
+
+    @staticmethod
+    def Save( _reservation ):
+        _reservation.save()
+
+    @staticmethod
+    def OverlapExists( _date_start, _date_end, _location_id ):
+        reservationsAll = Reservation.objects.all().filter( pk = _location_id )
+        for reservation in reservationsAll:
+            if  ( _date_start <= reservation.date_end < _date_end   ) or \
+                ( _date_start <= reservation.date_start < _date_end ) or \
+                ( reservation.date_start < _date_start and reservation.date_end > _date_end ):
+                return True
+        return False

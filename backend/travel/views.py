@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseBadRequest
-from .model_handlers import DestinationHandler, UserHandler
+from .model_handlers import DestinationHandler, UserHandler, ReservationHandler
 
 import json
 
@@ -12,12 +12,20 @@ def crud_destination( _request ):
             # Filter by location if specified
             _location = _request.GET.get( 'location', '' )
             if _location == '':
-                return HttpResponse( DestinationHandler.AllToJSON(), content_type = "application/json" )
+                # Filter by availability if specified
+                _date_start = _request.GET.get('start', '')
+                _date_end = _request.GET.get('end', '')
+                if _date_end != '' and _date_start != '':
+                    return HttpResponse( DestinationHandler.ToJSONArray( DestinationHandler.getAvailable( _date_start,
+                                                                                                          _date_end) ),
+                                         content_type="application/json" )
+                else:
+                    return HttpResponse( DestinationHandler.AllToJSON(), content_type = "application/json" )
             else:
-                return HttpResponse( DestinationHandler.ToJSONArray( DestinationHandler.GetByLocation( _location )),
-                                     content_type = "application/json" )
+                    return HttpResponse( DestinationHandler.ToJSONArray( DestinationHandler.GetByLocation( _location )),
+                                         content_type = "application/json" )
         except Exception as exc:
-            return HttpResponseBadRequest( "Failed to get destination. {}".format( str( exc ) ) )
+            return HttpResponseBadRequest( "Failed to get destinations. {}".format( str( exc ) ) )
     elif _request.method == "POST":
         try:
             destination = DestinationHandler.LoadJSON( json.loads( _request.body ) )
@@ -63,6 +71,25 @@ def register( _request ):
                                  content_type = "application/json" )
         except Exception as exc:
             return HttpResponseBadRequest( "Error creating account. {}".format( str( exc ) ) )
+    elif _request.method == "OPTIONS":
+        return HttpResponse( status = 200 )
+    return HttpResponseBadRequest( "Bad request." )
+
+
+#-----------------------------------------------------------------------------------------------------------------------
+#                                           RESERVATIONS ENDPOINTS
+#-----------------------------------------------------------------------------------------------------------------------
+def crud_reservation( _request ):
+    if _request.method == "POST":
+        try:
+            json_dict = json.loads( _request.body )
+            destinationToUpdate = DestinationHandler.LoadExisting( json_dict[ "destination_id" ] )
+            destinationToUpdate.spots_available = destinationToUpdate.spots_available - 1
+            ReservationHandler.Save( ReservationHandler.LoadJSON( json_dict ) )
+            DestinationHandler.Save( destinationToUpdate )
+            return HttpResponse( "Successfully created appointment!" )
+        except Exception as exc:
+            return HttpResponseBadRequest( "Failed to create appointment. {}".format(str(exc)))
     elif _request.method == "OPTIONS":
         return HttpResponse( status = 200 )
     return HttpResponseBadRequest( "Bad request." )

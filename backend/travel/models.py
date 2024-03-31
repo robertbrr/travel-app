@@ -1,4 +1,5 @@
 from django.db import models
+import django.utils.timezone
 
 #-----------------------------------------------------------
 #                 DESTINATIONS MODEL
@@ -20,7 +21,6 @@ class Destination( models.Model ):
 #                     USERS MODEL
 #-----------------------------------------------------------
 class User( models.Model ):
-
     class UserType( models.TextChoices ):
         AGENT  = "AG"
         CLIENT = "CL"
@@ -30,3 +30,13 @@ class User( models.Model ):
     password = models.CharField( max_length = 100 )
     role     = models.CharField( max_length = 2, choices = UserType.choices, default = UserType.CLIENT  )
 
+
+#-----------------------------------------------------------
+#                     RESERVATION MODEL
+#-----------------------------------------------------------
+class Reservation( models.Model ):
+    destination = Destination()
+    date_made   = models.DateField( default = django.utils.timezone.now() )
+    date_start  = models.DateField()
+    date_end    = models.DateField()
+    price       = models.DecimalField( default = 0.0, decimal_places = 2, max_digits = 10 )

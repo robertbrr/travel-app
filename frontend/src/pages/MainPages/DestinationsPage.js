@@ -9,11 +9,10 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { dateFromDateTime, getTomorrowDate } from "../../utilities/utilities";
-import mockDest from "../../images/destinations/liberty.jpg"
 import dayjs from 'dayjs';
 
 /* Utilities */
-import { isAgentLoggedIn } from "../../utilities/UserSession";
+import { isAgentLoggedIn, isClientLoggedIn } from "../../utilities/UserSession";
 
 /* Styles */
 import "../../styles/background.css"
@@ -25,7 +24,7 @@ function DestinationsPage( { offer_filter } )
     /* constants */
     const navigate = useNavigate()
     const [ from, setFrom ] = useState( dateFromDateTime( new Date() ) );
-    const [ to, setTo ] = useState( dateFromDateTime( new Date() ) );
+    const [ to, setTo ] = useState( dateFromDateTime( getTomorrowDate() ) );
     const { state: locationName } = useLocation();
     const [ destinationsArray, setDestinationsArray ] = useState( [] );
 
@@ -34,15 +33,20 @@ function DestinationsPage( { offer_filter } )
         getLocations()
         }, [] );
 
+    useEffect( () =>
+        {
+        getLocations()
+        }, [ to, from ] );
+
     /* HTTP Requests */
     const getLocations = () =>
         {
         const requestOptions
             =  {
             method: 'GET',
-        };
+            };
 
-        let fetch_str = `http://localhost:8000/api/v1/destinations`;
+        let fetch_str = `http://localhost:8000/api/v1/destinations?start=${from}&end=${to}`;
         if( locationName !== null && locationName !== '' )
             {
             fetch_str = fetch_str + `?location=${locationName}`
@@ -65,6 +69,7 @@ function DestinationsPage( { offer_filter } )
             })
             .catch( ( err ) => {
                 setDestinationsArray( [] );
+                alert( err )
             })
         }
 
@@ -100,6 +105,37 @@ function DestinationsPage( { offer_filter } )
             }
         }
 
+    const scheduleHandler = ( _destination ) =>
+        {
+        const requestOptions
+            =  {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(
+                {
+                    destination_id: _destination.pk,
+                    date_start: from,
+                    date_end: to,
+                    price: ( 1.0 - parseFloat( _destination.fields.percentage_offer ) / 100.0 ) * dayjs( to ).diff( from, 'day' ) * parseFloat( _destination.fields.price_nightly )
+                })
+        };
+
+        fetch( `http://localhost:8000/api/v1/reservations`, requestOptions )
+            .then( ( res ) => {
+                if( !res.ok )
+                    {
+                    return( res.text().then( text => { throw new Error( text ? text : "Error" ) } ) );
+                    }
+            })
+            .then( () => {
+                alert( "Successfully scheduled." );
+                getLocations();
+            })
+            .catch( ( err ) => {
+                alert( "Failed to schedule." );
+            })
+        }
+
     /* Div helper */
     const buildDestinationDiv = ( _destination ) =>
         {
@@ -127,8 +163,8 @@ function DestinationsPage( { offer_filter } )
                     <button type = "crud" onClick = { () => deleteDestinationHandler( _destination.pk ) } > Delete </button>
                     }
                     {
-                    !isAgentLoggedIn() &&
-                    <button type = "crud" > Schedule </button>
+                    isClientLoggedIn() &&
+                    <button type = "crud" onClick = { () => scheduleHandler( _destination ) } > Schedule </button>
                     }
                  </div>
 
@@ -168,7 +204,8 @@ function DestinationsPage( { offer_filter } )
                     <LocalizationProvider dateAdapter = { AdapterDayjs } >
                         <DemoContainer components = { [ 'DatePicker' ] }>
                             <DatePicker
-                                defaultValue = { dayjs( dateFromDateTime( new Date() ) ) }
+                                 value={ dayjs( from ) }
+                                // defaultValue = { dayjs( dateFromDateTime( new Date() ) ) }
                                 shouldDisableDate = { ( e ) => disableDatesBeforePresent( e.$d ) }
                                 onChange = { ( e ) => setFromHandler( e.$d ) }
                             />
@@ -180,7 +217,8 @@ function DestinationsPage( { offer_filter } )
                     <LocalizationProvider dateAdapter = { AdapterDayjs } >
                         <DemoContainer components = { [ 'DatePicker' ] }>
                             <DatePicker
-                                defaultValue = { dayjs( dateFromDateTime( getTomorrowDate() ) ) }
+                                 value = { dayjs( to ) }
+                                // defaultValue = { dayjs( dateFromDateTime( getTomorrowDate() ) ) }
                                 shouldDisableDate = { ( e ) => disableDatesBeforeFrom( e.$d ) }
                                 onChange = { ( e ) => setToHandler( e.$d ) }
                             />
