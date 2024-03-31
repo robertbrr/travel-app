@@ -1,8 +1,3 @@
-export const dateFromDateTime = ( _date ) =>
-    {
-    return( _date.toISOString().split("T")[0] )
-    }
-
 export const getTomorrowDate = () =>
     {
     let curr = new Date()

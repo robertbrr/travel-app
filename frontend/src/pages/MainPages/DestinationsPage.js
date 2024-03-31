@@ -8,13 +8,13 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { dateFromDateTime, getTomorrowDate } from "../../utilities/utilities";
 import dayjs from 'dayjs';
 
 /* Utilities */
 import { getCurrentUserData, isAgentLoggedIn, isClientLoggedIn } from "../../utilities/UserSession";
 
 /* Styles */
+import { getTomorrowDate } from "../../utilities/utilities";
 import "../../styles/background.css"
 import "../../styles/styles.css"
 
@@ -205,7 +205,9 @@ function DestinationsPage( { offer_filter } )
 
     const disableDatesBeforePresent = ( _date ) =>
         {
-        return( dayjs( _date ).isBefore( dayjs( new Date() ) ) );
+        let today = new Date();
+        today.setHours(0, 0, 0, 0);
+        return( dayjs( _date ).isBefore( dayjs( today ) ) );
         }
 
     const disableDatesBeforeFrom = ( _date ) =>
@@ -224,7 +226,6 @@ function DestinationsPage( { offer_filter } )
                         <DemoContainer components = { [ 'DatePicker' ] }>
                             <DatePicker
                                 value={ from  }
-                                // defaultValue = { dayjs( dateFromDateTime( new Date() ) ) }
                                 shouldDisableDate = { ( e ) => disableDatesBeforePresent( e.$d ) }
                                 onChange = { ( e ) => setFromHandler( e.$d ) }
                             />
@@ -236,21 +237,19 @@ function DestinationsPage( { offer_filter } )
                     <LocalizationProvider dateAdapter = { AdapterDayjs } >
                         <DemoContainer components = { [ 'DatePicker' ] }>
                             <DatePicker
-                                 value = { to }
-                                // defaultValue = { dayjs( dateFromDateTime( getTomorrowDate() ) ) }
+                                value = { to }
                                 shouldDisableDate = { ( e ) => disableDatesBeforeFrom( e.$d ) }
                                 onChange = { ( e ) => setToHandler( e.$d ) }
                             />
                         </DemoContainer>
                     </LocalizationProvider>
                 </div>
-
                 {
                 isAgentLoggedIn() &&
                     <button  type = "create-dest"  onClick = { () => { navigate( "/destinations/add" ) } }>Create</button>
                 }
-
             </div>
+
             <div className = "destinations-container" >
                 {
                 destinationsArray.map( ( dest ) =>

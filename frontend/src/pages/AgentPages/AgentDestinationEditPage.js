@@ -152,7 +152,6 @@ function AgentDestinationEditPage()
             {
                 isAgentLoggedIn() && destination &&
                 <div className={ "form-container-edit-dest" }>
-                    {/*<h3> Edit destination </h3>*/}
                     <div className="form-style">{ renderDestinationEditForm } </div>
                 </div>
             }

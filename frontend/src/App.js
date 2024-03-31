@@ -18,8 +18,8 @@ function App() {
         <Routes>
             <Route path ="/" element={<> <MainPage/> </>}/>
             <Route path ="/home" element={<> <MainPage/> </>}/>
-            <Route path ="/destinations" element={<> <DestinationsPage offer_filter = { false }/> </>}/>
             <Route path ="/reservations" element={<> <AgentReservationPage/> </>}/>
+            <Route path ="/destinations" element={<> <DestinationsPage offer_filter = { false }/> </>}/>
             <Route path ="/destinations/edit" element={<> <AgentDestinationEditPage/> </>}/>
             <Route path ="/destinations/add" element={<> <AgentDestinationAddPage/> </>}/>
             <Route path ="/offers" element={<> <DestinationsPage offer_filter = { true } /> </>}/>

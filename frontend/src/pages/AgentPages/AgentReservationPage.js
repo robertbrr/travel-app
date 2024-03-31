@@ -1,5 +1,9 @@
+/* React */
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+
+/* Components */
+import Navbar from "../MainPages/Navbar";
 import Calendar from 'react-calendar';
 import { Line } from "react-chartjs-2";
 import {
@@ -13,21 +17,24 @@ import {
     Legend,
 } from 'chart.js';
 
+/* Utilities */
+import moment from "moment";
+
+/* Styles */
 import 'react-calendar/dist/Calendar.css';
 import '../../styles/styles.css'
-import moment from "moment";
-import Navbar from "../MainPages/Navbar";
 
 function AgentReservationPage()
     {
-
     const { state: destination } = useLocation()
-    const [ reservationsArray, setReservationsArray ] = useState([])
+    const [ reservationsArray, setReservationsArray ] = useState([] )
+    const [ reservationsMap, setReservationsMap ] = useState( [] )
+
     const emptyMap = new Map([ [  0, 0 ],
         [  1, 0 ],  [  2, 0 ], [  3, 0 ], [  4, 0 ],  [  5, 0 ], [  6, 0 ],
         [  7, 0 ],  [  8, 0 ], [  9, 0 ], [ 10, 0 ],  [ 11, 0 ] ] );
-    const [ reservationsMap, setReservationsMap ] = useState( [] )
 
+    /* For the plot to show */
     ChartJS.register(
         CategoryScale,
         LinearScale,
@@ -38,32 +45,9 @@ function AgentReservationPage()
         Legend
     );
 
-    const _idxToMonth = ( _idx ) =>
-        {
-        switch (_idx)
-            {
-            case  0: return "January";
-            case  1: return "February";
-            case  2: return "March";
-            case  3: return "April";
-            case  4: return "May";
-            case  5: return "June";
-            case  6: return "July";
-            case  7: return "August";
-            case  8: return "September";
-            case  9: return "October";
-            case 10: return "November";
-            case 11: return "December";
-            default: return ""
-            }
-        }
-
     const mapToObjArr = ( _map ) =>
         {
-        let map_tmp = new Map()
-        _map.forEach( ( value, key ) => map_tmp.set( _idxToMonth( key ), value ) )
-        console.log( map_tmp )
-        return Array.from( map_tmp, ([key, value]) => ( value ));
+        return Array.from( _map, ([key, value]) => ( value ));
         }
 
     useEffect( () =>
